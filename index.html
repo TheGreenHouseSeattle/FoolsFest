@@ -1,0 +1,158 @@
+
+<style>
+  .calc-wrap { padding: 1.5rem 0; max-width: 640px; margin: 0 auto; }
+  .service-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; }
+  .tab { flex: 1; padding: 10px 12px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; cursor: pointer; font-size: 14px; font-weight: 400; color: var(--color-text-secondary); display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.15s; }
+  .tab:hover { background: var(--color-background-secondary); }
+  .tab.active { border: 1.5px solid; }
+  .tab .svc-name { font-size: 13px; font-weight: 500; }
+  .tab .rate-label { font-size: 11px; opacity: 0.75; }
+  .tab.spotify.active { border-color: #1DB954; color: #1DB954; background: rgba(29,185,84,0.06); }
+  .tab.deezer.active { border-color: #A238FF; color: #A238FF; background: rgba(162,56,255,0.06); }
+  .tab.apple.active { border-color: #FA243C; color: #FA243C; background: rgba(250,36,60,0.06); }
+  .logo-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .input-section { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+  .input-label { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 8px; }
+  .stream-input { width: 100%; box-sizing: border-box; font-size: 22px; font-weight: 500; padding: 10px 14px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); letter-spacing: -0.3px; }
+  .stream-input:focus { outline: none; border-color: var(--color-border-primary); }
+  .presets { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .preset-btn { font-size: 12px; padding: 4px 10px; border-radius: 20px; border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; }
+  .preset-btn:hover { background: var(--color-background-primary); color: var(--color-text-primary); }
+  .result-card { border-radius: var(--border-radius-lg); padding: 1.5rem; text-align: center; border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary); margin-bottom: 1rem; }
+  .result-label { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 8px; }
+  .result-amount { font-size: 44px; font-weight: 500; letter-spacing: -1px; margin-bottom: 4px; }
+  .result-sub { font-size: 13px; color: var(--color-text-secondary); }
+  .breakdown-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .bc { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px; text-align: center; }
+  .bc-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
+  .bc-value { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+  .disclaimer { font-size: 11px; color: var(--color-text-tertiary); text-align: center; margin-top: 1rem; line-height: 1.5; }
+  .svc-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+</style>
+
+<div class="calc-wrap">
+  <div class="service-tabs">
+    <button class="tab spotify active" onclick="setService('spotify')">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#1DB954"/><path d="M20 17.2c-.26 0-.44-.08-.64-.2-1.84-1.1-4.14-1.68-6.58-1.68-1.36 0-2.74.18-4 .48-.24.06-.42.08-.62.08-.56 0-.98-.42-.98-.98 0-.58.32-.94.82-1.06 1.5-.38 3.06-.58 4.8-.58 2.76 0 5.38.66 7.54 1.96.36.22.58.5.58.92-.02.58-.44.96-1.06.96-.18 0-.36-.02-.46-.06" fill="white"/><path d="M18.62 14.08c-.3 0-.5-.1-.72-.24-1.62-.96-3.82-1.56-6.3-1.56-1.32 0-2.4.18-3.3.44-.26.08-.46.12-.66.12-.6 0-1.06-.46-1.06-1.06 0-.58.28-.96.8-1.1a14.8 14.8 0 0 1 4.28-.6c2.76 0 5.38.68 7.54 2.04.38.24.6.54.6 1-.02.62-.5 1.06-1.12 1.06-.04-.1-.08-.1-.06-.1" fill="white"/><path d="M17.06 10.8c-.28 0-.44-.08-.66-.2-1.46-.84-3.62-1.32-5.74-1.32-1.14 0-2.18.14-3.04.36-.2.06-.4.1-.6.1-.52 0-.92-.38-.92-.9 0-.52.24-.84.68-.96C8.14 7.52 9.34 7.3 10.7 7.3c2.32 0 4.82.54 6.72 1.6.32.18.54.44.54.86 0 .52-.4.92-.9 1.04z" fill="white"/></svg>
+      <span class="svc-name">Spotify</span>
+      <span class="rate-label">~$0.004/stream</span>
+    </button>
+    <button class="tab deezer" onclick="setService('deezer')">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#A238FF"/><rect x="6" y="11" width="4" height="2.2" rx="1" fill="white" opacity="0.5"/><rect x="12" y="9" width="4" height="4.2" rx="1" fill="white" opacity="0.75"/><rect x="18" y="7" width="4" height="6.2" rx="1" fill="white"/><rect x="6" y="15" width="4" height="6" rx="1" fill="white" opacity="0.5"/><rect x="12" y="15" width="4" height="6" rx="1" fill="white" opacity="0.75"/><rect x="18" y="15" width="4" height="6" rx="1" fill="white"/></svg>
+      <span class="svc-name">Deezer</span>
+      <span class="rate-label">~$0.0064/stream</span>
+    </button>
+    <button class="tab apple" onclick="setService('apple')">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#FA243C"/><path d="M18.5 15.9c-.05-2.6 2.13-3.88 2.23-3.94-1.22-1.78-3.11-2.02-3.78-2.05-1.6-.16-3.14.95-3.96.95-.82 0-2.07-.93-3.41-.9-1.74.02-3.35 1.02-4.25 2.58-1.83 3.16-.47 7.84 1.3 10.4.87 1.25 1.9 2.65 3.25 2.6 1.31-.05 1.8-.84 3.38-.84 1.57 0 2.02.84 3.39.81 1.41-.02 2.3-1.27 3.15-2.53.99-1.44 1.4-2.85 1.43-2.92-.03-.01-2.7-1.03-2.73-4.16z" fill="white"/><path d="M15.84 8.03c.72-.87 1.2-2.08 1.07-3.28-1.04.04-2.29.69-3.03 1.55-.67.77-1.25 2-1.1 3.17 1.16.09 2.35-.59 3.06-1.44z" fill="white"/></svg>
+      <span class="svc-name">Apple Music</span>
+      <span class="rate-label">~$0.01/stream</span>
+    </button>
+  </div>
+
+  <div class="input-section">
+    <div class="input-label">Number of streams</div>
+    <input class="stream-input" type="text" id="streamInput" placeholder="Enter stream count" oninput="calculate()" />
+    <div class="presets">
+      <button class="preset-btn" onclick="setVal(1000)">1K</button>
+      <button class="preset-btn" onclick="setVal(10000)">10K</button>
+      <button class="preset-btn" onclick="setVal(100000)">100K</button>
+      <button class="preset-btn" onclick="setVal(500000)">500K</button>
+      <button class="preset-btn" onclick="setVal(1000000)">1M</button>
+      <button class="preset-btn" onclick="setVal(10000000)">10M</button>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-label">Estimated royalty earnings</div>
+    <div class="result-amount" id="resultAmount" style="color: var(--color-text-primary);">$0.00</div>
+    <div class="result-sub" id="resultSub">Enter stream count above</div>
+  </div>
+
+  <div class="breakdown-grid">
+    <div class="bc">
+      <div class="bc-label">Rate per stream</div>
+      <div class="bc-value" id="rateDisplay">—</div>
+    </div>
+    <div class="bc">
+      <div class="bc-label">Streams entered</div>
+      <div class="bc-value" id="streamDisplay">—</div>
+    </div>
+    <div class="bc">
+      <div class="bc-label">To reach $1,000</div>
+      <div class="bc-value" id="breakDisplay">—</div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    Rates are approximate averages. Actual payouts vary based on listener location, subscription tier,<br>label agreements, and distributor fees. Not financial advice.
+  </div>
+</div>
+
+<script>
+const services = {
+  spotify: { rate: 0.004, color: '#1DB954', label: 'Spotify' },
+  deezer:  { rate: 0.0064, color: '#A238FF', label: 'Deezer' },
+  apple:   { rate: 0.01, color: '#FA243C', label: 'Apple Music' }
+};
+let current = 'spotify';
+
+function setService(s) {
+  current = s;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.tab.' + s).classList.add('active');
+  calculate();
+}
+
+function setVal(n) {
+  document.getElementById('streamInput').value = n.toLocaleString();
+  calculate();
+}
+
+function parseStreams(raw) {
+  return parseInt(raw.replace(/[^0-9]/g, ''), 10) || 0;
+}
+
+function fmt(n) {
+  if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B';
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+  return n.toLocaleString();
+}
+
+function calculate() {
+  const raw = document.getElementById('streamInput').value;
+  const streams = parseStreams(raw);
+  const svc = services[current];
+  const earnings = streams * svc.rate;
+
+  const amountEl = document.getElementById('resultAmount');
+  const subEl = document.getElementById('resultSub');
+  const rateEl = document.getElementById('rateDisplay');
+  const streamEl = document.getElementById('streamDisplay');
+  const breakEl = document.getElementById('breakDisplay');
+
+  amountEl.style.color = streams > 0 ? svc.color : 'var(--color-text-primary)';
+
+  if (streams === 0) {
+    amountEl.textContent = '$0.00';
+    subEl.textContent = 'Enter stream count above';
+    rateEl.textContent = '$' + svc.rate.toFixed(4);
+    streamEl.textContent = '—';
+    breakEl.textContent = fmt(Math.ceil(1000 / svc.rate));
+    return;
+  }
+
+  if (earnings >= 1000) {
+    amountEl.textContent = '$' + earnings.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  } else {
+    amountEl.textContent = '$' + earnings.toFixed(2);
+  }
+
+  subEl.textContent = 'from ' + streams.toLocaleString() + ' streams on ' + svc.label;
+  rateEl.textContent = '$' + svc.rate.toFixed(4);
+  streamEl.textContent = fmt(streams);
+  breakEl.textContent = fmt(Math.ceil(1000 / svc.rate));
+}
+
+calculate();
+</script>
